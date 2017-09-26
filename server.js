@@ -13,20 +13,18 @@ const app = express();
 app.use(bodyParser.json());
 
 const users = require('./routes/users');
-app.route('/users')
-  .get(users.get)
-  .post(users.post);
-
+app.use('/users', users);
 
 // Error handling
 app.use((err, req, res, next) => {
   res.status(400).send(err);
 });
 
+
 // Connects to DB and starts the server
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient:true}, err => {
   if (err) throw err;
-  console.log(`DB connected ${process.env.DB_PATH}`);
+  console.log(`DB connected`);
 
   // Starts the server
   const port = process.env.PORT || 3000;

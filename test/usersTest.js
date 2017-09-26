@@ -18,9 +18,8 @@ describe('Users', () => {
   });
 
   /*
-  *  Test /GET all users
+  *  Test /POST to users
   */
-
   describe('/POST users', () => {
     it('it should CREATE and RETURN a new user', (done) => {
       var userJSON = {"email" : "dimas@dimasgabriel.net", "password" : "123456"};
@@ -36,6 +35,7 @@ describe('Users', () => {
         });
     });
 
+    
     it('it should not CREATE two users with the same email address', (done) => {
       var userJSON = {"email" : "dimas@dimasgabriel.net", "password" : "123456"};
       chai.request(server)
@@ -48,17 +48,41 @@ describe('Users', () => {
     });
   });
 
-  // describe('/GET users', () => {
-  //   it('it should GET all the users', (done) => {
-  //     chai.request(server)
-  //       .get('/users')
-  //       .end((err, res) => {
-  //         res.should.have.status(200);
-  //         res.body.should.be.an('array');
-  //         res.body.length.should.be.eql(1);
-  //         done();
-  //       });
-  //   });
-  // });
+  /* 
+   * Test GET /users
+   */
+  describe('GET /users', () => {
+    it('it should GET all the users', (done) => {
+      chai.request(server)
+        .get('/users')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.an('array');
+          res.body.length.should.be.equal(1);
+          done();
+        });
+    });
+  });
+
+  /*
+   * Test GET /users/user_id
+   */
+
+   describe('GET /users/:user_id', () => {
+    it('it should get an user by the given ID', (done) => {
+      const user = User({"email" : "testuser@email.com", "password" : "123456"});
+      user.save((err, user) => {
+        chai.request(server)
+          .get(`/users/${user._id}`)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.an('object');
+            res.body.should.have.property('email');
+            res.body.should.have.property('password');
+            done();
+          });
+      });
+    });
+   });
 
 });
