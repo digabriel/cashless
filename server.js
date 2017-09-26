@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
 });
 
 // Connects to DB and starts the server
-mongoose.connect(process.env.DB_PATH, {useMongoClient:true}, err => {
+mongoose.connect(process.env.MONGODB_URI, {useMongoClient:true}, err => {
   if (err) throw err;
   console.log(`DB connected ${process.env.DB_PATH}`);
 
