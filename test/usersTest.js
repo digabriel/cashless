@@ -71,9 +71,9 @@ describe('Users', () => {
    describe('GET /users/:user_id', () => {
     it('it should get an user by the given ID', (done) => {
       const user = User({"email" : "testuser@email.com", "password" : "123456"});
-      user.save((err, user) => {
+      user.save((err, u) => {
         chai.request(server)
-          .get(`/users/${user._id}`)
+          .get(`/users/${u._id}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.an('object');
@@ -82,6 +82,30 @@ describe('Users', () => {
             done();
           });
       });
+    });
+   });
+
+
+  /*
+   * Test DELETE /users/user_id
+   */
+   describe('DELETE /users/:user_id', () => {
+    it('it should DELETE and user by the given Id', (done) => {
+      const user = User({"email" : "testuser2@email.com", "password" : "123456"});
+      user.save((err, u) => {
+        chai.request(server)
+          .delete(`/users/${u._id}`)
+          .end((err, res) => {
+            res.should.have.status(200);
+            
+            chai.request(server)
+              .get(`/users/${u._id}`)
+              .end((err, res) => {
+                res.should.have.status(200);
+                done();
+              });
+          });
+        });
     });
    });
 

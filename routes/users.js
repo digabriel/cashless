@@ -26,7 +26,16 @@ function getById(req, res, next) {
 
     res.status(200).json(user);
   });
-}
+};
+
+// Delete and User by ID
+function deleteById(req, res, next) {
+  User.findByIdAndRemove(req.params.id, (err) => {
+    if (err) return next(err);
+
+    res.status(200).send();
+  });
+};
 
 module.exports = (() => {
   const express = require('express');
@@ -37,7 +46,8 @@ module.exports = (() => {
     .post(post);
 
   router.route('/:id')
-    .get(getById);
+    .get(getById)
+    .delete(deleteById);
 
   return router;
 })();
