@@ -1,0 +1,9 @@
+{
+  "environments": {
+    "test": {
+      "env": {
+        "MONGODB_URI": "mongodb://heroku_1m4h8pcp:jikp0v7p29cf4gma20dffss5gp@ds149934.mlab.com:49934/heroku_1m4h8pcp"
+      }
+    }
+  }
+}
