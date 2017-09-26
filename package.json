@@ -1,0 +1,32 @@
+{
+  "name": "cashless",
+  "version": "0.0.1",
+  "description": "Foget money. Use cashless!",
+  "main": "server.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha --timeout 10000",
+    "start": "NODE_ENV=development node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digabriel/cashless.git"
+  },
+  "author": "Dimas Gabriel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/digabriel/cashless/issues"
+  },
+  "homepage": "https://github.com/digabriel/cashless#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.5",
+    "mongoose": "^4.11.13",
+    "mongoose-unique-validator": "^1.0.6"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.5.3"
+  }
+}
