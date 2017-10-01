@@ -2,44 +2,49 @@ const User = require("../models/user");
 const APIResponse = require("../models/APIResponse");
 
 // Get all Users
-function get(req, res, next) {
-  User.find({}, (err, users) => {
-    if (err) return next(err);
-
-    var response = new APIResponse(true, 200, null, users);
+async function get(req, res, next) {
+  try {
+    const users = await User.find({});
+    const response = new APIResponse(true, 200, null, users);
     res.status(200).json(response);
-  });
+  }catch (err) {
+    next(err);
+  }
 }
 
 // Create new User
-function post(req, res, next) {
+async function post(req, res, next) {
   const u = new User(req.body);
-  u.save((err, user) => {
-    if (err) return next(err);
 
-    var response = new APIResponse(true, 200, null, user);
+  try {
+    const user = await u.save();
+    const response = new APIResponse(true, 200, null, user);
     res.status(201).json(response);
-  });
+  }catch (err) {
+    next(err);
+  }
 }
 
 // Get User by ID
-function getById(req, res, next) {
-  User.findById(req.params.id, (err, user) => {
-    if (err) return next(err);
-
-    var response = new APIResponse(true, 200, null, user);
+async function getById(req, res, next) {
+  try {
+    const user = await User.findById(req.params.id);
+    const response = new APIResponse(true, 200, null, user);
     res.status(200).json(response);
-  });
+  }catch (err) {
+    next(err);
+  }
 }
 
 // Delete and User by ID
-function deleteById(req, res, next) {
-  User.findByIdAndRemove(req.params.id, err => {
-    if (err) return next(err);
-
-    var response = new APIResponse(true, 200, null, null);
+async function deleteById(req, res, next) {
+  try {
+    await User.findByIdAndRemove(req.params.id);
+    const response = new APIResponse(true, 200, null, null);
     res.status(200).json(response);
-  });
+  }catch (err) {
+    next(err);
+  }
 }
 
 module.exports = (() => {
