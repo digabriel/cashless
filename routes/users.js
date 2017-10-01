@@ -1,50 +1,26 @@
-const User = require("../models/user");
+const User = require("../models/User");
 const APIResponse = require("../models/APIResponse");
+const CRUD = require("../models/CRUD_helpers");
 
 // Get all Users
 async function get(req, res, next) {
-  try {
-    const users = await User.find({});
-    const response = new APIResponse(true, 200, null, users);
-    res.status(200).json(response);
-  }catch (err) {
-    next(err);
-  }
+  CRUD.readList(User, {}, res, next);
 }
 
 // Create new User
 async function post(req, res, next) {
   const u = new User(req.body);
-
-  try {
-    const user = await u.save();
-    const response = new APIResponse(true, 200, null, user);
-    res.status(201).json(response);
-  }catch (err) {
-    next(err);
-  }
+  CRUD.create(u, res, next);
 }
 
 // Get User by ID
 async function getById(req, res, next) {
-  try {
-    const user = await User.findById(req.params.id);
-    const response = new APIResponse(true, 200, null, user);
-    res.status(200).json(response);
-  }catch (err) {
-    next(err);
-  }
+  CRUD.read(User, req.params.id, res, next);
 }
 
 // Delete and User by ID
 async function deleteById(req, res, next) {
-  try {
-    await User.findByIdAndRemove(req.params.id);
-    const response = new APIResponse(true, 200, null, null);
-    res.status(200).json(response);
-  }catch (err) {
-    next(err);
-  }
+  CRUD.delete(User, req.params.id, res, next);
 }
 
 module.exports = (() => {

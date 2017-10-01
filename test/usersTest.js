@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require("../models/user");
+const User = require("../models/User");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const server = require("../server.js");
