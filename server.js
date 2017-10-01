@@ -20,6 +20,10 @@ app.use((err, req, res, next) => {
   res.status(400).send(err);
 });
 
+app.use((req, res, next) => {
+  res.send();
+});
+
 
 // Connects to DB and starts the server
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient:true}, err => {
