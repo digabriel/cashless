@@ -38,7 +38,12 @@ UserSchema.statics.auth = function (email, password) {
       "expiration_date" : ed
     };
 
-    resolve(auth);
+    const json = {
+      auth: auth,
+      user: user
+    }
+
+    resolve(json);
   });
 };
 

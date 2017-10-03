@@ -55,6 +55,48 @@ describe("Users", () => {
     });
   });
 
+  /*
+   * Test User Auth
+   */
+  describe("POST /users/auth", () => {
+    it("it should authenticate an User with email and password", done => {
+      var userJSON = { email: "dimas@dimasgabriel.net", password: "123456" };
+
+      chai
+        .request(server)
+        .post("/users/auth")
+        .send(userJSON)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.data.should.be.an("object");
+          res.body.data.should.have.property("user");
+          res.body.data.should.have.property("auth");
+
+          res.body.data.auth.should.have.property("access-token");
+          res.body.data.auth.should.have.property("refresh-token");
+          res.body.data.auth.should.have.property("expiration_date");
+
+          res.body.data.user.should.have.property("_id");
+          done();
+        });
+    });
+
+    it("it should not authenticate an User with wrong password", done => {
+      var userJSON = { email: "dimas@dimasgabriel.net", password: "1236" };
+
+      chai
+        .request(server)
+        .post("/users/auth")
+        .send(userJSON)
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.should.be.an("object");
+          res.body.should.have.property("errorMessage");
+          done();
+        });
+    });
+  });
+
   /* 
    * Test GET /users
    */
