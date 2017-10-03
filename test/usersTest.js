@@ -30,8 +30,14 @@ describe("Users", () => {
         .end((err, res) => {
           res.should.have.status(201);
           res.body.data.should.be.an("object");
-          res.body.data.should.have.property("email").equal("dimas@dimasgabriel.net");
-          res.body.data.should.have.property("_id");
+          res.body.data.should.have.property("user");
+          res.body.data.should.have.property("auth");
+
+          res.body.data.auth.should.have.property("access-token");
+          res.body.data.auth.should.have.property("refresh-token");
+          res.body.data.auth.should.have.property("expiration_date");
+
+          res.body.data.user.should.have.property("_id");
           done();
         });
     });

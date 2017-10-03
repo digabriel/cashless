@@ -11,11 +11,26 @@ async function get(req, res, next) {
 // Create new User
 async function post(req, res, next) {
   const u = new User(req.body);
+  const pass = u.password;
 
   // Hashing user password
-  u.password = await bcrypt.hash(u.password, 10);
+  u.password = await bcrypt.hash(pass, 10);
 
-  CRUD.create(u, res, next);
+  try {
+    await u.save();
+
+    const responseJSON = {
+      user: u
+    };
+
+    // Generate access-token and refresh-token
+    responseJSON["auth"] = await User.auth(u.email, pass);
+
+    const response = new APIResponse(true, 201, null, responseJSON);
+    res.status(201).json(response);
+  }catch(err) {
+    next(err);
+  }
 }
 
 // Get User by ID
