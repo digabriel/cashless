@@ -15,6 +15,9 @@ app.use(bodyParser.json());
 const users = require('./routes/users');
 app.use('/users', users);
 
+const events = require('./routes/events');
+app.use('/events', events);
+
 // Error handling
 app.use((err, req, res, next) => {
   res.status(400).send(err);
