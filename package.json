@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/digabriel/cashless#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
     "express": "^4.15.5",

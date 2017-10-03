@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const APIResponse = require("../models/APIResponse");
 const CRUD = require("../models/CRUD_helpers");
+const bcrypt = require("bcryptjs");
 
 // Get all Users
 async function get(req, res, next) {
@@ -10,6 +11,10 @@ async function get(req, res, next) {
 // Create new User
 async function post(req, res, next) {
   const u = new User(req.body);
+
+  // Hashing user password
+  u.password = bcrypt.hashSync(u.password);
+  
   CRUD.create(u, res, next);
 }
 
