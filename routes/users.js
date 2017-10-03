@@ -13,8 +13,8 @@ async function post(req, res, next) {
   const u = new User(req.body);
 
   // Hashing user password
-  u.password = bcrypt.hashSync(u.password);
-  
+  u.password = await bcrypt.hash(u.password, 10);
+
   CRUD.create(u, res, next);
 }
 
