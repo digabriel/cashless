@@ -26,7 +26,7 @@ async function post(req, res, next) {
     const response = new APIResponse(true, 201, null, json);
     res.status(201).json(response);
   }catch(_) {
-    const err = new APIError("Can create this User", 400, 400);
+    const err = new APIError("Can't create this User", 400, 400);
     next(err);
   }
 };

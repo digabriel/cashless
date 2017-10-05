@@ -18,14 +18,12 @@ app.use('/users', users);
 const events = require('./routes/events');
 app.use('/events', events);
 
+const tickets = require('./routes/tickets');
+app.use('/tickets', tickets);
+
 // Error Middleware (ALL errors are handled here)
 var errorMiddleware = require('./helpers/error_middleware.js');
 app.use(errorMiddleware);
-
-app.use((req, res, next) => {
-  res.send();
-});
-
 
 // Connects to DB and starts the server
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient:true}, err => {
